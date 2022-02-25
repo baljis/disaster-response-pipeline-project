@@ -1,3 +1,4 @@
+
 import json
 import plotly
 import pandas as pd
@@ -8,7 +9,8 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+#from sklearn.externals import joblib -- official script
+import joblib # change 1
 from sqlalchemy import create_engine
 
 
@@ -93,6 +95,7 @@ def go():
 
 
 def main():
+    
     app.run(host='0.0.0.0', port=3001, debug=True)
 
 
