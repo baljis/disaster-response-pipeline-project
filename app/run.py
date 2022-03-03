@@ -1,3 +1,4 @@
+
 import json
 import plotly
 import pandas as pd
@@ -8,7 +9,8 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
+import joblib # change 1
 from sqlalchemy import create_engine
 
 
@@ -27,10 +29,10 @@ def tokenize(text):
 
 # load data
 engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+df = pd.read_sql_table('messages_categories', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -82,7 +84,7 @@ def go():
 
     # use model to predict classification for query
     classification_labels = model.predict([query])[0]
-    classification_results = dict(zip(df.columns[4:], classification_labels))
+    classification_results = dict(zip(df.columns[3:], classification_labels))
 
     # This will render the go.html Please see that file. 
     return render_template(
@@ -93,6 +95,7 @@ def go():
 
 
 def main():
+    
     app.run(host='0.0.0.0', port=3001, debug=True)
 
 
